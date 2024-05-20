@@ -47,22 +47,35 @@ class MyCustomUserManager(BaseUserManager):
 class CustomUser(AbstractBaseUser):
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
     username = models.CharField(max_length=30, blank=True)
-    first_name = models.CharField(max_length=50, blank=True)
-    last_name = models.CharField(max_length=50, blank=True)
-    date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
+    first_name = models.CharField(
+        max_length=50,
+        blank=True,
+    )
+    last_name = models.CharField(
+        max_length=50,
+        blank=True,
+    )
+    date_joined = models.DateTimeField(
+        verbose_name="date joined",
+        auto_now_add=True,
+    )
     last_login = models.DateTimeField(verbose_name="last login", auto_now=True)
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    dni = models.CharField(max_length=10, blank=True)
-    phone = models.CharField(max_length=30, blank=True)
-    birthdate = models.DateField(default="1990-01-01", blank=True)
+    dni = models.CharField(max_length=10, blank=True, null=True)
+    phone = models.CharField(max_length=30, blank=True, null=True)
+    birthdate = models.DateField(
+        default="1990-01-01",
+        blank=True,
+    )
     hide_email = models.BooleanField(default=True)
 
     objects = MyCustomUserManager()
 
     USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["first_name", "last_name", "birthdate"]
 
     def __str__(self):
         return self.username

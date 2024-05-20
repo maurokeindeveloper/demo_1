@@ -21,11 +21,26 @@ class RegistrationForm(UserCreationForm):
     email = forms.EmailField(
         max_length=255, help_text="Ingresá tu dirección de correo."
     )
-    first_name = forms.CharField(max_length=60)
-    last_name = forms.CharField(max_length=60)
-    dni = forms.CharField(max_length=20)
-    phone = forms.CharField(max_length=30)
-    birthdate = forms.DateField(validators=[validate_age])
+    first_name = forms.CharField(
+        max_length=60,
+        error_messages={"required": "Por favor ingresá tu nombre"},
+    )
+    last_name = forms.CharField(
+        max_length=60,
+        error_messages={"required": "Por favor ingresá tu apellido"},
+    )
+    dni = forms.CharField(
+        max_length=20,
+    )
+    phone = forms.CharField(
+        max_length=30,
+    )
+    birthdate = forms.DateField(
+        validators=[validate_age],
+        error_messages={
+            "required": "Por favor ingresá tu fecha de nacimiento. Tenés que ser mayor de edad para registrarte."
+        },
+    )
 
     class Meta:
         model = CustomUser
@@ -39,6 +54,11 @@ class RegistrationForm(UserCreationForm):
             "phone",
             "birthdate",
         )
+
+    def __init__(self, *args, **kwargs):
+        super(RegistrationForm, self).__init__(*args, **kwargs)
+        self.fields["dni"].required = False
+        self.fields["phone"].required = False
 
     def clean_email(self):
         email = self.cleaned_data["email"].lower()

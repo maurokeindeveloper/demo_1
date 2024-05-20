@@ -23,11 +23,11 @@ class RegistrationForm(UserCreationForm):
     )
     first_name = forms.CharField(
         max_length=60,
-        error_messages={"required": "Por favor ingresá tu nombre"},
+        error_messages={"required": "Ingresá tu nombre"},
     )
     last_name = forms.CharField(
         max_length=60,
-        error_messages={"required": "Por favor ingresá tu apellido"},
+        error_messages={"required": "Ingresá tu apellido"},
     )
     dni = forms.CharField(
         max_length=20,
@@ -38,7 +38,7 @@ class RegistrationForm(UserCreationForm):
     birthdate = forms.DateField(
         validators=[validate_age],
         error_messages={
-            "required": "Por favor ingresá tu fecha de nacimiento. Tenés que ser mayor de edad para registrarte."
+            "required": "Necesitamos tu fecha de nacimiento. Tenés que ser mayor de edad para registrarte."
         },
     )
 
